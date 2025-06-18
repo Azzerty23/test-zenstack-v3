@@ -1,0 +1,30 @@
+{
+  "name": "zenstack-app",
+  "version": "3.0.0-alpha.4",
+  "description": "Scaffolded with create-zenstack",
+  "type": "module",
+  "scripts": {
+    "generate": "zenstack generate",
+    "db:migrate": "zenstack migrate dev",
+    "build": "tsc --noEmit",
+    "dev": "dotenv -e .env -- tsx main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@zenstackhq/runtime": "^3.0.0-alpha.4",
+    "better-sqlite3": "^11.10.0",
+    "dotenv-cli": "^8.0.0",
+    "pg": "^8.16.0",
+    "pg-connection-string": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.0.3",
+    "@types/pg": "^8.11.11",
+    "@zenstackhq/cli": "^3.0.0-alpha.4",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
