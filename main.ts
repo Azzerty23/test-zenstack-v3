@@ -45,7 +45,7 @@ async function main() {
     },
     computedFields: {
       Post: {
-        newTitle: (eb) => eb.ref("title"),
+        newTitle: (eb) => eb(eb.ref("title"), "||", " (new)"),
         isNotPublished: (eb) => eb.not(eb.ref("published")),
       },
       User: {
@@ -197,6 +197,41 @@ async function main() {
   // create with custom procedure
   const newUser = await db.$procedures.signUp("marvin@zenstack.dev", "Marvin");
   console.log("User signed up:", newUser);
+
+  const user3 = await db.user.create({
+    data: {
+      email: "user3@test.com",
+      role: "USER",
+    },
+  });
+  console.log("User 3 created with ORM API:", user3);
+
+  console.log("-------- Query builder API --------");
+
+  const [user4] = await db.$qb
+    .insertInto("User")
+    .values({
+      id: "4",
+      name: "User 4",
+      email: "user4@test.com",
+      role: "USER",
+      updatedAt: new Date().toISOString(),
+    })
+    .returning(["id", "name", "email"])
+    .execute();
+  console.log("User 4 created with Query builder API:", user4);
+
+  const [updatedUser] = await db.$qb
+    .updateTable("User")
+    .set({
+      name: "Updated User 4",
+      email: "updated4@test.com",
+    })
+    .where("id", "=", "4")
+    .returning(["id", "name", "email"])
+    .execute();
+
+  console.log("User 4 updated with Query builder API:", updatedUser);
 }
 
 main();
